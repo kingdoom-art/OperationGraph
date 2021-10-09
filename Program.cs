@@ -140,7 +140,7 @@ namespace Graph
                     //достаем верхнюю вершину стэка, в стэке она удаляется
                     int tmp = tmpStack.Pop();
                     tmpGraph.Add_R(tmp);
-                    //Console.WriteLine(iter + " R");
+
                     /*
                      * идем по графу, ищем нашу вершину на первом местие, при этом вершина на втором месте
                      * не должна содержаться в финальном множестве
@@ -157,7 +157,7 @@ namespace Graph
                 {
                     int tmp = tmpStack.Pop();
                     tmpGraph.Add_Q(tmp);
-                    //Console.WriteLine(iter + " Q");
+
                     //Аналогично достижимому, только проверяется на первая вершина, а вторая
                     var plenty = mas.Where(r => r.b == tmp && !tmpGraph.Q_Contains(r.a)).Select(m => m.a).ToList();
                     plenty.ForEach(t => tmpStack.Push(t));
@@ -166,31 +166,20 @@ namespace Graph
                 tmpGraph.Intersect();
                 //удаляем все отработанное из графа
                 point = tmpGraph.ShrederPoint(point);
-
-                point.ForEach(t => Console.Write(t + " "));
-                Console.WriteLine();
-
                 mas = tmpGraph.ShrederEdge(mas);
-                mas.ForEach(t => Console.Write(t.a + " " + t.b + " " + t.num+" | "));
-                Console.WriteLine();
-
-                Console.WriteLine(tmpGraph.name);
-                tmpGraph.ShowR();
-                tmpGraph.ShowQ();
-                tmpGraph.ShowIntersect();
 
                 //собираем новый граф
                 finalGraph.Add(tmpGraph);
                 iter++;
             }
 
-            //foreach(var i in finalGraph)
-            //{
-            //    Console.WriteLine(i.name);
-            //    i.ShowR();
-            //    i.ShowQ();
-            //    i.ShowIntersect();
-            //}
+            foreach (var i in finalGraph)
+            {
+                Console.WriteLine(i.name);
+                i.ShowR();
+                i.ShowQ();
+                i.ShowIntersect();
+            }
         }
 
         static void Main(string[] args)
